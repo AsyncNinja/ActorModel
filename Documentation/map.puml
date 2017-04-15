@@ -1,0 +1,62 @@
+
+@startuml
+
+class ServicesFactory {
+    **makes and caches service instances**
+    ===
+    func perform(request: ServiceRequest) -> Channel<ServiceReport, ServiceResponse>
+}
+
+interface Service {
+    **introduces methods of interaction with the service**
+    ===
+    func perform(request: ServiceRequest) -> Channel<ServiceReport, ServiceResponse>
+}
+    Service *-down- ServiceAddress
+    Service o-up- ServicesFactory
+
+class ServiceAddress {
+    **A way of referring to a service**
+    No need to thing about a particular service
+    Just a service that fits your context
+    ===
+}
+
+interface Server {
+    **Does the actual work**
+    ====
+}
+    Service <|.. Server
+
+interface Proxy {
+    **multiplexes service methods to ServiceRequest**
+    ===
+}
+    Service <|.. Proxy
+
+interface ServiceRecord
+    ServiceRecord *-- ServiceAddress
+
+interface ServiceRequest {
+    **stores a request info**
+    demultiplexes self to service methods
+    ===
+    func perform(on: Service) -> Channel<ServiceReport, ServiceResponse>
+}
+    ServiceRecord <|.. ServiceRequest
+
+interface ServiceReport {
+    **stores a report info**
+    such as completion fraction or intermediate response
+    ===
+}
+    ServiceRecord <|.. ServiceReport
+
+
+interface ServiceResponse {
+    **stores a response info**
+    ===
+}
+    ServiceRecord <|.. ServiceResponse
+
+@enduml
