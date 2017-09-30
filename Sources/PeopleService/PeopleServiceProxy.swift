@@ -25,15 +25,15 @@ import AsyncNinja
 import ActorModel
 import Entities
 
-public extension ServicesFactory {
+public extension ServicesLocator {
   func peopleService(environment: Environment) -> PeopleService {
-    return PeopleServiceProxy(environment: environment, servicesFactory: self)
+    return PeopleServiceProxy(environment: environment, servicesLocator: self)
   }
 }
 
 private struct PeopleServiceProxy: ServiceProxy {
   var environment: Environment
-  var servicesFactory: ServicesFactory
+  var servicesLocator: ServicesLocator
 }
 
 extension PeopleServiceProxy: PeopleService {
@@ -52,7 +52,7 @@ extension PeopleServiceProxy: PeopleService {
 
     func perform(onPeopleService service: PeopleService) -> Channel<PeopleServiceReport, PeopleServiceResponse> {
       return service.person(name: personName)
-        .flatMap { (person) -> Channel<PeopleServiceReport, PeopleServiceResponse> in
+        .flatMap(executor: .immediate) { (person) -> Channel<PeopleServiceReport, PeopleServiceResponse> in
           let response = GetPersonForNameResponse(serviceAddress: self.serviceAddress, person: person)
           return .just(response)
       }

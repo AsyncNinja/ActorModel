@@ -28,11 +28,11 @@ import PeopleService
 
 public class PeopleServer: PeopleService, ServiceActor {
   public let environment: Environment
-  public let servicesFactory: ServicesFactory
+  public let servicesLocator: ServicesLocator
 
-  public init(environment: Environment, servicesFactory: ServicesFactory) {
+  public init(environment: Environment, servicesLocator: ServicesLocator) {
     self.environment = environment
-    self.servicesFactory = servicesFactory
+    self.servicesLocator = servicesLocator
   }
 
   public func person(name: String) -> Future<Person> {

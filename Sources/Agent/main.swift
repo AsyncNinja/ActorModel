@@ -32,13 +32,13 @@ let sema = DispatchSemaphore(value: 0)
 
 func makePeopleServer(
   withAddress address: ServiceAddress,
-  servicesFactory: ServicesFactory
+  servicesLocator: ServicesLocator
   ) throws -> Future<ServiceActor>
 {
   guard let environment = address.spec.base as? Environment
     else { throw ActorModelError.wrongAddress }
   return future(after: 0.2) {
-    PeopleServer(environment: environment, servicesFactory: servicesFactory)
+    PeopleServer(environment: environment, servicesLocator: servicesLocator)
   }
 }
 

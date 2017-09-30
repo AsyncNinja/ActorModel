@@ -23,14 +23,14 @@
 import Dispatch
 import AsyncNinja
 
-public class ServicesFactory: ExecutionContext, ReleasePoolOwner {
+public class ServicesFactory: ServicesLocator, ExecutionContext, ReleasePoolOwner {
   public var executor: Executor { return Executor.queue(_internalQueue) }
   public let releasePool = ReleasePool()
 
-  private let _internalQueue = DispatchQueue(label: "services-locator")
+  private let _internalQueue = DispatchQueue(label: "services-factory")
   private var _cache: SimpleCache<ServiceAddress, ServiceActor>!
 
-  public init(factoriesByServiceName: [String: (ServiceAddress, ServicesFactory) throws -> Future<ServiceActor>]) {
+  public init(factoriesByServiceName: [String: (ServiceAddress, ServicesLocator) throws -> Future<ServiceActor>]) {
     _cache = SimpleCache(context: self) { (self, address) -> Future<ServiceActor> in
       guard let factory = factoriesByServiceName[address.name]
         else { throw ActorModelError.unknownServiceName }

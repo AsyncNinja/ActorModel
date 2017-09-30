@@ -12,7 +12,7 @@
 //  all copies or substantial portions of the Software.
 //
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  IMPLIED, INCLUDING UT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 //  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 //  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
@@ -22,32 +22,6 @@
 
 import AsyncNinja
 
-public protocol Service {
-  static var name: String { get }
-  var address: ServiceAddress { get }
-  var servicesLocator: ServicesLocator { get }
-  func perform(request: ServiceRequest) throws -> Channel<ServiceReport, ServiceResponse>
-}
-
-// MARK: - Service Proxy
-
-public protocol ServiceProxy: Service { }
-
-public extension ServiceProxy {
-  func perform(request: ServiceRequest) -> Channel<ServiceReport, ServiceResponse> {
-    return servicesLocator.perform(request: request)
-  }
-}
-
-// MARK: - Service Actor
-
-public protocol ServiceActor: Service {
-}
-
-public extension ServiceActor {
-  func perform(request: ServiceRequest) throws -> Channel<ServiceReport, ServiceResponse> {
-    guard request.serviceAddress == address
-      else { throw ActorModelError.wrongAddress }
-    return try request.perform(on: self)
-  }
-}
+public protocol ServicesLocator: ExecutionContext {
+  func perform(request: ServiceRequest) -> Channel<ServiceReport, ServiceResponse>
+} 
