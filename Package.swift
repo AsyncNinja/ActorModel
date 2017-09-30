@@ -1,4 +1,4 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 
 //
 //  Copyright (c) 2017 Anton Mironov
@@ -26,14 +26,14 @@ import PackageDescription
 
 let package = Package(
   name: "ActorModel",
-  targets: [
-    Target(name: "Agent", dependencies: ["PeopleServer"]),
-    Target(name: "PeopleServer", dependencies: ["PeopleService"]),
-    Target(name: "PeopleService", dependencies: ["ActorModel", "Entities"]),
-    Target(name: "Entities", dependencies: []),
-    Target(name: "ActorModel", dependencies: []),
-    ],
   dependencies: [
-    .Package(url: "https://github.com/AsyncNinja/AsyncNinja.git", majorVersion: 1),
+    .package(url: "https://github.com/AsyncNinja/AsyncNinja.git", .branch("develop")),
+    ],
+  targets: [
+    .target(name: "Agent", dependencies: ["PeopleServer"]),
+    .target(name: "PeopleServer", dependencies: ["PeopleService"]),
+    .target(name: "PeopleService", dependencies: ["ActorModel", "Entities"]),
+    .target(name: "Entities", dependencies: []),
+    .target(name: "ActorModel", dependencies: ["AsyncNinja"]),
     ]
 )

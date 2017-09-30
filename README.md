@@ -4,6 +4,8 @@ This is a suggested implementation of [Actor Model](https://en.wikipedia.org/wik
 
 ![Actor Model Map](Documentation/map.png)
 
+**for Swift 4.0+**
+
 ## Terminology
 - **`Service`** respons to a range of requests. There are several kinds of `Services`:
 
@@ -32,4 +34,4 @@ peopleService.person(name: "John Appleseed").onSuccess {
 
 1. clone
 2. `cd <dir_of_cloned_repo>`
-3. `swift package update`
+3. `swift run`
