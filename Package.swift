@@ -1,5 +1,4 @@
 // swift-tools-version:4.0
-
 //
 //  Copyright (c) 2017 Anton Mironov
 //
@@ -26,6 +25,12 @@ import PackageDescription
 
 let package = Package(
   name: "ActorModel",
+  products: [
+    .executable(name: "Agent", targets: ["Agent"]),
+    .library(name: "ActorModel", targets: ["ActorModel"]),
+    .library(name: "ActorModelStatic", type: .static, targets: ["ActorModel"]),
+    .library(name: "ActorModelDynamic", type: .dynamic, targets: ["ActorModel"])
+  ],
   dependencies: [
     .package(url: "https://github.com/AsyncNinja/AsyncNinja.git", .branch("develop")),
     ],
