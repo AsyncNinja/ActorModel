@@ -33,7 +33,6 @@ public enum ActorModelError: Error {
 public struct ServiceAddress: Hashable {
   public var name: String
   public var spec: AnyHashable
-  public var hashValue: Int { return name.hashValue ^ spec.hashValue }
 
   public init(name: String, spec: AnyHashable) {
     self.name = name

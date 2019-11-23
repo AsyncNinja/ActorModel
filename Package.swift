@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 //
 //  Copyright (c) 2017 Anton Mironov
 //
@@ -32,7 +32,7 @@ let package = Package(
     .library(name: "ActorModelDynamic", type: .dynamic, targets: ["ActorModel"])
   ],
   dependencies: [
-    .package(url: "https://github.com/AsyncNinja/AsyncNinja.git", .branch("develop")),
+    .package(url: "https://github.com/AsyncNinja/AsyncNinja.git", .branch("master")),
     ],
   targets: [
     .target(name: "Agent", dependencies: ["PeopleServer"]),
