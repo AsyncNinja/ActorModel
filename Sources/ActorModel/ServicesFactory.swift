@@ -23,7 +23,7 @@
 import Dispatch
 import AsyncNinja
 
-public class ServicesFactory: ServicesLocator, ExecutionContext, ReleasePoolOwner {
+open class ServicesFactory: ServicesLocator, ExecutionContext, ReleasePoolOwner {
   public var executor: Executor { return Executor.queue(_internalQueue) }
   public let releasePool = ReleasePool()
 
@@ -38,7 +38,7 @@ public class ServicesFactory: ServicesLocator, ExecutionContext, ReleasePoolOwne
     }
   }
 
-  public func perform(request: ServiceRequest) -> Channel<ServiceReport, ServiceResponse> {
+  open func perform(request: ServiceRequest) -> Channel<ServiceReport, ServiceResponse> {
     return actor(at: request.serviceAddress)
       .flatMap { try $0.perform(request: request) }
   }
